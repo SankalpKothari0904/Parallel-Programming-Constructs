@@ -5,6 +5,7 @@
     - Compiler Directives
     - Runtime Library Routines
     - Environment Variables
+
 ## Goals of OpenMP
 - **Standardization**:
     - Provide a standard among a variety of shared memory architectures/platforms.
@@ -19,6 +20,44 @@
 - **Portability**:
     - The API is specified for C/C++ and Fortran.
     - Most major platforms have been implemented including Unix/Linux platforms and Windows.
+
+
+## OpenMP API Overview
+We give an overview of the OpenMP API below, these will be covered in more detail in later sections.
+### Compiler Directives
+Compiler directives appear as comments in your source code and are ignored by compilers unless you tell them otherwise - usually by specifying the appropriate compiler flag (in our case, the `-fopenmp` flag).
+
+General syntax: `sentinel    directive-name    [clause, ...]`
+
+They can be used to:
+- Spawn a parallel region
+- Divide blocks of code among threads
+- Distribute loop iterations between threads
+- Serialize sections of code
+- Synchronize of work among threads
+### Runtime Library Routines
+Routines are used to:
+- Set and query the number of threads
+- Query a thread’s unique identifier (thread ID), a thread’s ancestor’s identifier, the thread team size
+- Set and query the dynamic threads feature
+- Query if in a parallel region, and at what level
+- Set and query nested parallelism
+- Set, initialize and terminate locks and nested locks
+- Query wall clock time and resolution
+For C/C++, all of the run-time library routines are actual subroutines. For Fortran, some are actually functions, and some are subroutines.
+### Environment Variables
+OpenMP provides several environment variables for controlling the execution of parallel code at run-time. These environment variables can be used to control things such as:
+- Setting the number of threads
+- Specifying how loop iterations are divided
+- Binding threads to processors
+- Enabling/disabling nested parallelism; setting the maximum levels of nested parallelism
+- Enabling/disabling dynamic threads
+- Setting thread stack size
+- Setting thread wait policy
+
+These are set like any other environment variable is, and depends on what shell one uses.
+
+
 ## OpenMP Programming Model
 ### Shared Memory Model
 OpenMP is designed for multi-processor/core, shared memory machines. The underlying architecture can be shared memory UMA or NUMA.

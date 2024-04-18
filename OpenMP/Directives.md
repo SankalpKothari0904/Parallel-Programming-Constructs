@@ -51,16 +51,16 @@ PROGRAM TEST
 ```
 SUBROUTINE SUB1  
     ...  
-**!$OMP CRITICAL**  
+!$OMP CRITICAL  
     ...  
-**!$OMP END CRITICAL**  
+!$OMP END CRITICAL  
     END  
   
     SUBROUTINE SUB2  
     ...  
-**!$OMP SECTIONS**  
+!$OMP SECTIONS  
     ...  
-**!$OMP END SECTIONS**  
+!$OMP END SECTIONS  
     ...  
     END
 ```

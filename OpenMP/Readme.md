@@ -1,4 +1,5 @@
 # Table of Contents
 
-- [01. Quick Start](QuickStart.md)
-- [02. Diving Deeper Into OpenMP](ProgrammingModel-API.md)
+- [Quick Start](QuickStart.md)
+- [Diving Deeper Into OpenMP](ProgrammingModel-API.md)
+- [C/C++ OpenMP Directives](Directives.md)

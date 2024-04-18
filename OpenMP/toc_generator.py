@@ -15,11 +15,13 @@ def generate_table_of_contents(directory):
     sorted_files = sorted(files_with_creation_times, key=lambda x: x[1])
     
     # Generate table of contents
+    file_num = 1
     for filename, _ in sorted_files:
         file_path = os.path.join(directory, filename)
         with open(file_path, 'r', encoding='utf-8') as file:
             title = file.readline().strip('#').strip()
-            table_of_contents += f"- [{title}]({filename})\n"
+            table_of_contents += f"- [{file_num}. {title}]({filename})\n"
+            file_num += 1
     
     # Write table of contents to README.md
     with open(os.path.join(directory, "README.md"), 'w', encoding='utf-8') as toc_file:

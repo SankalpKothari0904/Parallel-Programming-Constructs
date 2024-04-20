@@ -7,6 +7,7 @@ There is no implied `barrier` upon entry to a work-sharing construct, however th
 DO/for shares the iterations of a loop across the team (represents a type of "data parallelism").
 
 ![wsc-do_for](Images/wsc-do_for.png)
+
 (Credit: Lawrence Livermore National Laboratory)
 
 The DO / for directive specifies that the iterations of the loop immediately following it must be executed in parallel by the team. This assumes a parallel region has already been initiated, otherwise it executes in serial on a single processor.
@@ -120,6 +121,7 @@ for (i = 0; i < N; i++) {
 SECTIONS breaks work into separate, discrete sections. Each section is executed by a thread. Can be used to implement a type of “functional parallelism”.
 
 ![wsc-sections](Images/wsc-sections.png)
+
 (Credit: Lawrence Livermore National Laboratory)
 
 The `SECTIONS` directive is a non-iterative work-sharing construct. It specifies that the enclosed section(s) of code are to be divided among the threads in the team.
@@ -223,3 +225,33 @@ for (i = 0; i < N; i++) {
 It is illegal to branch (goto) into or out of section blocks.
 
 `SECTION` directives must occur within the lexical extent of an enclosing `SECTIONS` directive (no orphan `SECTION`s). **Please read this line carefully!**
+
+### SINGLE
+SINGLE serializes a section of code.
+
+![wsc-single](Images/wsc-single.png)
+
+(Credit: Lawrence Livermore National Laboratory)
+
+The SINGLE directive specifies that the enclosed code is to be executed by only one thread in the team. May be useful when dealing with sections of code that are not thread safe (such as I/O).
+#### Format
+```c++
+#pragma omp single _[clause ...] 
+                   private _(list)_ 
+                   firstprivate _(list)_ 
+                   nowait
+
+_structured_block_
+```
+
+**Note:** Threads in the team that do not execute the SINGLE directive, wait at the end of the enclosed code block, unless a NOWAIT/nowait clause is specified.
+##### General Rules
+It is illegal to branch (goto) into or out of a `SINGLE` block.
+### WORKSHARE
+There is another OpenMP work-sharing construct, known as the workshare directive. It is available only in Fortran, and we are skipping it for now. 
+## Some General Rules For All Work Sharing Constructs
+- A work-sharing construct must be enclosed dynamically within a parallel region in order for the directive to execute in parallel.
+- Work-sharing constructs must be encountered by all members of a team or none at all.
+- Successive work-sharing constructs must be encountered in the same order by all members of a team.
+
+These rules help prevent challenges such as race conditions, and promote data consistency.

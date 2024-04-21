@@ -255,3 +255,36 @@ There is another OpenMP work-sharing construct, known as the workshare directive
 - Successive work-sharing constructs must be encountered in the same order by all members of a team.
 
 These rules help prevent challenges such as race conditions, and promote data consistency.
+
+### Additional Remarks
+OpenMP provides three directives for the user's convenience:
+- PARALLEL DO / parallel for
+- PARALLEL SECTIONS
+- PARALLEL WORKSHARE _(Fortran only)_
+For the most part, these directives behave identically to an individual PARALLEL directive being immediately followed by a separate work-sharing directive. Most of the rules, clauses and restrictions that apply to both directives are in effect.
+
+Example:
+```c++
+// In a file called parallel_do_for.cpp
+#include <stdio.h>
+#include <omp.h>
+#define N       1000
+#define CHUNKSIZE   100
+
+int main ()  {
+	int i, chunk;
+	float a[N], b[N], c[N];
+	
+	// Initialization
+	for (i=0; i < N; i++) {
+	  a[i] = b[i] = i * 1.0;
+	}
+	chunk = CHUNKSIZE;
+	
+	#pragma omp parallel for shared(a,b,c,chunk) private(i) schedule(static,chunk)
+	for (i=0; i < n; i++) {
+		c[i] = a[i] + b[i];
+	}
+	return 0;
+}
+```

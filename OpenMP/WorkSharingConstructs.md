@@ -129,11 +129,11 @@ The `SECTIONS` directive is a non-iterative work-sharing construct. It specifies
 Independent `SECTION` directives are nested within a `SECTIONS` directive. Each `SECTION` is executed once by a thread in the team. Different sections may be executed by different threads. It is possible for a thread to execute more than one section if it is quick enough and the implementation permits such.
 #### Format
 ```c++
-#pragma omp sections _[clause ...]
-                     private _(list)_ 
-                     firstprivate _(list)_ 
-                     lastprivate _(list)_ 
-                     reduction _(operator: list)_ 
+#pragma omp sections [clause ...]
+                     private (list)
+                     firstprivate (list) 
+                     lastprivate (list) 
+                     reduction (operator: list) 
                      nowait
   {
 
@@ -236,9 +236,9 @@ SINGLE serializes a section of code.
 The SINGLE directive specifies that the enclosed code is to be executed by only one thread in the team. May be useful when dealing with sections of code that are not thread safe (such as I/O).
 #### Format
 ```c++
-#pragma omp single _[clause ...] 
-                   private _(list)_ 
-                   firstprivate _(list)_ 
+#pragma omp single [clause ...] 
+                   private (list)
+                   firstprivate (list) 
                    nowait
 
 _structured_block_

@@ -6,6 +6,7 @@ Consider a simple example where two threads on two different processors are both
 | --------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
 | High Level Code | increment(x)  <br>{  <br>x = x + 1;  <br>}                           | increment(x)  <br>{  <br>x = x + 1;  <br>}                           |
 | Assembly        | 10 LOAD A, (x address)  <br>20 ADD A, 1  <br>30 STORE A, (x address) | 10 LOAD A, (x address)  <br>20 ADD A, 1  <br>30 STORE A, (x address) |
+
 **One possible execution sequence:**
 1. Thread 1 loads the value of x into register A.
 2. Thread 2 loads the value of x into register A.

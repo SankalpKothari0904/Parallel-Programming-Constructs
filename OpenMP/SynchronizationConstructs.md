@@ -101,3 +101,48 @@ statement_expression
 ```
 
 There are a few more nuances to the syntax here, and it is suggested that one refers to the official documentation [here](https://www.openmp.org/spec-html/5.0/openmpsu95.html)
+
+## FLUSH Directive
+The `FLUSH` directive identifies a synchronization point at which the implementation must provide a consistent view of memory. Thread-visible variables are written back to memory at this point.
+
+The `FLUSH` directive is necessary, even in cache coherent systems. The directive is necessary to instruct the compiler that the variable must be written to/read from the memory system, i.e. that the variable can not be kept in a local CPU register over the flush “statement” in your code.
+### Format
+```c++
+#pragma omp flush (list)
+```
+The optional list contains a list of named variables that will be flushed in order to avoid flushing all variables. For pointers in the list, note that the pointer itself is flushed, not the object it points to.
+
+Implementations must ensure any prior modifications to thread-visible variables are visible to all threads after this point; i.e. compilers must restore values from registers to memory, hardware might need to flush write buffers, etc.
+
+The `FLUSH` directive is implied (in C++) for the following directives - 
+- `BARRIER`  
+- `PARALLEL` - upon entry and exit  
+- `CRITICAL` - upon entry and exit  
+- `ORDERED` - upon entry and exit  
+- `FOR` - upon exit  
+- `SECTIONS` - upon exit  
+- `SINGLE` - upon exit.  
+Note that the directive is not implied if a NOWAIT clause is present.
+## ORDERED Directive
+The `ORDERED` directive specifies that iterations of the enclosed loop will be executed in the same order as if they were executed on a serial processor.
+Threads will need to wait before executing their chunk of iterations if previous iterations haven’t completed yet.
+
+Used within a `DO / FOR` loop with an ORDERED clause.
+The `ORDERED` directive provides a way to "fine-tune" where ordering is to be applied within a loop. Otherwise, it is not required.
+### Format
+```c++
+#pragma omp for ordered [clauses...]
+(loop region)
+
+#pragma omp ordered
+structured_block
+
+(endo of loop region)
+```
+### General Rules
+- An `ORDERED` directive can only appear in the dynamic extent of the following directives:
+    - FOR or PARALLEL FOR (C/C++)
+- Only one thread is allowed in an ordered section at any time.
+- It is illegal to branch into or out of an `ORDERED` block.
+- An iteration of a loop must not execute the same `ORDERED` directive more than once, and it must not execute more than one `ORDERED` directive.
+- A loop which contains an `ORDERED` directive, must be a loop with an `ORDERED` clause.

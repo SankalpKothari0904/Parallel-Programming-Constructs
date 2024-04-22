@@ -6,3 +6,4 @@
 - [4. Parallel Region Construct](ParallelConstruct.md)
 - [5. Work-Sharing Constructs](WorkSharingConstructs.md)
 - [6. Task Construct](TaskConstruct.md)
+- [7. Synchronization Constructs](SynchronizationConstructs.md)

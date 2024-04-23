@@ -64,19 +64,19 @@ SUBROUTINE SUB1
     ...  
     END
 ```
-- **Static Extent:** the DO directive occurs within an enclosing PARALLEL region.
-- **Orphaned Directives:** The CRITICAL and SECTIONS directives occur outside an enclosing parallel region.
-- **Dynamic Extent:** The CRITICAL and SECTIONS directives occur within the dynamic extent of the DO and PARALLEL directives.
+- **Static Extent:** the `DO` directive occurs within an enclosing `PARALLEL` region.
+- **Orphaned Directives:** The `CRITICAL` and `SECTIONS` directives occur outside an enclosing `PARALLEL` region.
+- **Dynamic Extent:** The `CRITICAL` and `SECTIONS` directives occur within the dynamic extent of the `DO` and `PARALLEL` directives.
 
 OpenMP specifies a number of scoping rules on how directives may associate (bind) and nest within each other.
 Illegal and/or incorrect programs may result if the OpenMP binding and nesting rules are ignored.
 ## Directive Binding and Nesting Rules
 ### Directive Binding
-- The DO/for, SECTIONS, SINGLE, MASTER and BARRIER directives bind to the dynamically enclosing PARALLEL, if one exists. If no parallel region is currently being executed, the directives have no effect.
-- The ORDERED directive binds to the dynamically enclosing DO/for.
-- The ATOMIC directive enforces exclusive access with respect to ATOMIC directives in all threads, not just the current team.
-- The CRITICAL directive enforces exclusive access with respect to CRITICAL directives in all threads, not just the current team.
-- A directive can never bind to any directive outside the closest enclosing PARALLEL.
+- The `DO/for`, `SECTIONS`, `SINGLE`, `MASTER` and `BARRIER` directives bind to the dynamically enclosing `PARALLEL`, if one exists. If no parallel region is currently being executed, the directives have no effect.
+- The `ORDERED` directive binds to the dynamically enclosing `DO/for`.
+- The `ATOMIC` directive enforces exclusive access with respect to `ATOMIC` directives in all threads, not just the current team.
+- The `CRITICAL` directive enforces exclusive access with respect to `CRITICAL` directives in all threads, not just the current team.
+- A directive can never bind to any directive outside the closest enclosing `PARALLEL`.
 ### Directive Nesting
 - A work-sharing region may not be closely nested inside a work-sharing, explicit task, critical, ordered, atomic, or master region.
 - A barrier region may not be closely nested inside a work-sharing, explicit task, critical, ordered, atomic, or master region.
@@ -84,9 +84,10 @@ Illegal and/or incorrect programs may result if the OpenMP binding and nesting r
 - An ordered region may not be closely nested inside a critical, atomic, or explicit task region.
 - An ordered region must be closely nested inside a loop region (or parallel loop region) with an ordered clause.
 - A critical region may not be nested (closely or otherwise) inside a critical region with the same name. Note that this restriction is not sufficient to prevent deadlock.
-- parallel, flush, critical, atomic, taskyield, and explicit task regions may not be closely nested inside an atomic region.
+- `PARALLEL`, `FLUSH`, `CRITICAL`, `ATOMIC`, `TASKYIELD`, and explicit `TASK` regions may not be closely nested inside an `ATOMIC` region.
+
 #### Closely Nested Directives
-In OpenMP, closely nested directives refer to situations where multiple OpenMP directives are nested within each other, often within the same code block or function. This nesting typically involves directives like parallel regions, loop parallelization directives (such as `parallel for`), and work-sharing constructs (such as `sections` or `task`).
+In OpenMP, closely nested directives refer to situations where multiple OpenMP directives are nested within each other, often within the same code block or function. This nesting typically involves directives like `PARALLEL` regions, loop parallelization directives (such as `PARALLEL FOR`), and work-sharing constructs (such as `SECTIONS` or `TASK`).
 
 ```C
 #pragma omp parallel
@@ -100,6 +101,6 @@ In OpenMP, closely nested directives refer to situations where multiple OpenMP d
     }
 }
 ```
-In this example, there are closely nested directives: `parallel`, `for`, and `task` directives are nested within each other. Each nested directive introduces a new level of parallelism, allowing the program to exploit different levels of concurrency.
+In this example, there are closely nested directives: `PARALLEL`, `FOR`, and `TASK` directives are nested within each other. Each nested directive introduces a new level of parallelism, allowing the program to exploit different levels of concurrency.
 
 Closely nested directives can provide fine-grained control over parallel execution and enable developers to express complex parallel patterns and algorithms. However, they also require careful consideration to ensure correctness and avoid performance overhead due to excessive parallelization or synchronization. Improperly nested directives can lead to race conditions, deadlocks, or inefficient parallel execution. Therefore, understanding and managing nested directives effectively is essential for writing efficient and scalable parallel code with OpenMP.

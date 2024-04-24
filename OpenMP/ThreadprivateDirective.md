@@ -78,3 +78,15 @@ The `threadprivate` directive in OpenMP serves various use cases where you need 
 3. **Thread-Specific Configuration**: If you have configuration settings or parameters that are specific to each thread and need to remain constant throughout the execution of multiple parallel regions, `threadprivate` can be used to maintain thread-specific configurations.
 
 Overall, `threadprivate` provides a convenient mechanism for managing thread-specific data that needs to persist across multiple parallel regions without the overhead of recreating or reallocating the data in each region.
+
+### PRIVATE vs THREADPRIVATE
+
+|                          | PRIVATE                                                     | THREADPRIVATE                                                    |
+| ------------------------ | ----------------------------------------------------------- | ---------------------------------------------------------------- |
+| Data Item                | Variable                                                    | Variable                                                         |
+| Where is the Declaration | At the start of the region or work-sharing group            | In declarations of each routine using block or global file scope |
+| Persistent?              | No                                                          | Yes                                                              |
+| Extent                   | Lexical only - unless passed as an argument to a subroutine | Dynamic                                                          |
+| Initialized              | Use FIRSTPRIVATE                                            | Use COPYIN                                                       |
+
+

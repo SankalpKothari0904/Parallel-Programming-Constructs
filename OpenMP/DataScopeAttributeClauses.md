@@ -60,3 +60,68 @@ For example, the team member which executes the final iteration for a `DO` secti
 ```c++
 #pragma omp <compatible_directive> lastprivate (list_of_vars)
 ```
+
+## REDUCTION Clause
+The `REDUCTION` clause performs a reduction on the variables that appear in its list.
+
+A private copy for each list variable is created for each thread. At the end of the reduction, the reduction variable is applied to all private copies of the shared variable, and the final result is written to the global shared variable.
+### Format
+```c++
+#pragma omp <compatible_directive> reduction (operator: list)
+```
+### Example
+Consider the following example for computing vector dot product,
+```c++
+#include <stdio.h>
+#include <omp.h>
+
+int main() {
+	int   i, n, chunk;
+	float a[100], b[100], result;
+	
+	// Some initializations
+	n = 100;
+	chunk = 10;
+	result = 0.0;
+	for (i=0; i < n; i++) {
+		a[i] = i * 1.0;
+		b[i] = i * 2.0;
+	}
+	
+	#pragma omp parallel for default(shared) private(i) schedule(static,chunk) reduction(+: result)  	
+	for (i=0; i < n; i++) {
+		result = result + (a[i] * b[i]);
+	}
+	printf("Final result= %f\n",result);
+	return 0;
+}
+```
+Iterations of the parallel loop will be distributed in equal sized blocks to each thread in the team (`SCHEDULE STATIC`)
+
+At the end of the parallel loop construct, all threads will add their values of "result" to update the master thread’s global copy.
+### General Rules
+Variables in the list must be named scalar variables. They can not be array or structure type variables. They must also be declared `SHARED` in the enclosing context.
+Reduction operations may not be associative for real numbers.
+
+The `REDUCTION` clause is intended to be used on a region or work-sharing construct in which the reduction variable is used only in statements which have one of following forms (for C/C++):
+- x = x op expr  
+- x = expr op x (except subtraction)  
+- x binop = expr  
+- x++  
+- ++x  
+- x--  
+- --x
+
+where, 
+- x is a scalar variable in the list  
+- expr is a scalar expression that does not reference x  
+- op is not overloaded, and is one of +, \*, -, /, &, ^, |, &&, ||  
+- binop is not overloaded, and is one of +, \*, -, /, &, ^, |
+## COPYIN Clause
+The `COPYIN` clause provides a means for assigning the same value to `THREADPRIVATE` variables for all threads in the team.
+### Format
+```c++
+#pragma omp <compatible_directive> copyin (list)
+```
+List contains the names of variables to copy. The master thread variable is used as the copy source. The team threads are initialized with its value upon entry into the parallel construct.
+

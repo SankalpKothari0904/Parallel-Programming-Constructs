@@ -10,3 +10,4 @@
 - [8. Data Scope Attribute Clauses](DataScopeAttributeClauses.md)
 - [9. THREADPRIVATE Directive](ThreadprivateDirective.md)
 - [10. Additional Resources](AdditionalResources.md)
+- [11. Programs And Algorithms](ProgramsAndAlgorithms.md)

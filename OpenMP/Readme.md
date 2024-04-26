@@ -11,3 +11,4 @@
 - [9. THREADPRIVATE Directive](ThreadprivateDirective.md)
 - [10. Additional Resources](AdditionalResources.md)
 - [11. Programs And Algorithms](ProgramsAndAlgorithms.md)
+- [12. Design Patterns In OpenMP](OpenMPDesignPatterns.md)

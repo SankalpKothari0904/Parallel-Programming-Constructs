@@ -1,8 +1,8 @@
-# OpenMP Like Tools
+# OpenMP Tools In Java
 
 ## Overview
 
-OpenMp is widely used for implementing parallel programming constructs in a local environment/cluster and is considered an industry standard. The OpenMP documentation provides directives and functions only for C/C++ and Fortran. Hence we will look at how OpenMP like tools are being developed in other programming languages and try to come to a generalized approach on building programming languages that support parallelism.
+OpenMp is widely used for implementing parallel programming constructs in a local environment/cluster and is considered an industry standard. The OpenMP documentation provides directives and functions only for C/C++ and Fortran, so a programmer could direct the compiler to generate multithreaded code through a sequence of directives. Hence we will look at how OpenMP like tools are being developed in other programming languages and try to come to a generalized approach on building programming languages that support parallelism. 
 
 ## Exploration of tools
 
@@ -182,6 +182,30 @@ It provides the necessary functionality to support parallelism in terms of Java'
 
 
 ### [OMP4J - OpenMP Library For Java](https://dl.acm.org/doi/abs/10.5555/3636517.3636530)
+
+This article provides the link to a github repository that contains the implementation of the compiler and the runtime libraries described in jomp. This is called omp4j. 
+
+It takes the java code which contains the directives specified as comments and converts it to an expanded form based on the grammar they have defined and allows the runtime code to execute the parallel programs by making use of the native thread implementations. 
+
+Example code : 
+```
+class For {
+    public void test1() {
+        // omp parallel for schedule(dynamic)
+        for (int i = 2; i < 20; i += 3) {
+            System.out.println("hello @" + i);
+        }
+    }
+
+    private int field = 40;
+    public void test2() {
+        // omp parallel for
+        for (int i = 2; i < this.field; i += 3) {
+            System.out.println("hello @" + i);
+        }
+    }
+}
+```
 
 
 

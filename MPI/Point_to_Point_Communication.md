@@ -78,3 +78,39 @@ for (i=1; i<ntasks; i++) {
 Blocking sends in MPI ensure that the sender does not proceed with further instructions until the communication operation is completed. This blocking behavior guarantees that the sender's data is safe to be accessed or modified after the send operation returns. Once the send operation completes, the sender can safely reuse or modify the sent data without worrying about potential data corruption.
 
 On the other hand, non-blocking sends in MPI (e.g., MPI_Isend) return immediately after initiating the communication operation without waiting for it to complete. This non-blocking behavior allows the sender to continue executing other instructions while the send operation is in progress. However, this also means that the sender must be cautious not to modify or access the sent data until the communication operation completes. If the sender accesses or modifies the data before the send operation finishes, it may lead to data corruption or incorrect results.
+
+### Order and Fairness
+
+MPI guarantees that messages will not overtake each other.
+
+If a sender sends two messages (Message 1 and Message 2) in succession to the same destination, and both match the same receive, the receive operation will receive Message 1 before Message 2.
+
+If a receiver posts two receives (Receive 1 and Receive 2), in succession, and both are looking for the same message, Receive 1 will receive the message before Receive 2.
+
+Order rules do not apply if there are multiple threads participating in the communication operations.
+
+MPI does not guarantee fairness - it’s up to the programmer to prevent “operation starvation”.
+
+Example: task 0 sends a message to task 2. However, task 1 sends a competing message that matches task 2’s receive. Only one of the sends will complete.
+
+### Buffering in MPI
+
+In a perfect world, every send operation would be perfectly synchronized with its matching receive. This is rarely the case. Somehow or other, the MPI implementation must be able to deal with storing data when the two tasks are out of sync.
+
+Consider the following two cases:
+
+A send operation occurs 5 seconds before the receive is ready - where is the message while the receive is pending?
+Multiple sends arrive at the same receiving task which can only accept one send at a time - what happens to the messages that are “backing up”?
+The MPI implementation (not the MPI standard) decides what happens to data in these types of cases. Typically, a system buffer area is reserved to hold data in transit. For example:
+
+![Buffer Recv](buffer_recv.jpg)
+
+System buffer space is:
+
+- Opaque to the programmer and managed entirely by the MPI library
+- A finite resource that can be easy to exhaust
+- Often mysterious and not well documented
+- Able to exist on the sending side, the receiving side, or both
+- Something that may improve program performance because it allows send-receive operations to be asynchronous.
+- User managed address space (i.e. your program variables) is called the application buffer. MPI also provides for a user managed send buffer.
+

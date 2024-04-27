@@ -8,7 +8,6 @@ Initializes the MPI execution environment. This function must be called in every
 
 ```
 MPI_Init (&argc,&argv)
-MPI_INIT (ierr)
 ```
 
 **MPI_Comm_size**
@@ -17,7 +16,6 @@ Returns the total number of MPI processes in the specified communicator, such as
 
 ```
 MPI_Comm_size (comm,&size)
-MPI_COMM_SIZE (comm,size,ierr)
 ```
 
 **MPI_Comm_rank**
@@ -26,7 +24,6 @@ Returns the rank of the calling MPI process within the specified communicator. I
 
 ```
 MPI_Comm_rank (comm,&rank)
-MPI_COMM_RANK (comm,rank,ierr)
 ```
 
 **MPI_Abort**
@@ -35,7 +32,6 @@ Terminates all MPI processes associated with the communicator. In most MPI imple
 
 ```
 MPI_Abort (comm,errorcode)
-MPI_ABORT (comm,errorcode,ierr)
 ```
 
 **MPI_Get_processor_name**
@@ -44,7 +40,6 @@ Returns the processor name. Also returns the length of the name. The buffer for 
 
 ```
 MPI_Get_processor_name (&name,&resultlength)
-MPI_GET_PROCESSOR_NAME (name,resultlength,ierr)
 ```
 
 **MPI_Get_version**
@@ -53,7 +48,6 @@ Returns the version and subversion of the MPI standard that's implemented by the
 
 ```
 MPI_Get_version (&version,&subversion)
-MPI_GET_VERSION (version,subversion,ierr)
 ```
 
 **MPI_Initialized**
@@ -62,7 +56,6 @@ Indicates whether MPI_Init has been called - returns flag as either logical true
 
 ```
 MPI_Initialized (&flag)
-MPI_INITIALIZED (flag,ierr)
 ```
 
 **MPI_Wtime**
@@ -71,7 +64,6 @@ Returns an elapsed wall clock time in seconds (double precision) on the calling 
 
 ```
 MPI_Wtime ()
-MPI_WTIME ()
 ```
 
 **MPI_Wtick**
@@ -80,7 +72,6 @@ Returns the resolution in seconds (double precision) of MPI_Wtime.
 
 ```
 MPI_Wtick ()
-MPI_WTICK ()
 ```
 
 **MPI_Finalize**
@@ -89,12 +80,10 @@ Terminates the MPI execution environment. This function should be the last MPI r
 
 ```
 MPI_Finalize ()
-MPI_FINALIZE (ierr)
 ```
 
 ### Examples
 
-#### C Language - Environment Management Routines
 
 ```
 // required MPI include file
@@ -102,28 +91,28 @@ MPI_FINALIZE (ierr)
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
-int  numtasks, rank, len, rc;
-char hostname[MPI_MAX_PROCESSOR_NAME];
+    int  numtasks, rank, len, rc;
+    char hostname[MPI_MAX_PROCESSOR_NAME];
 
-// initialize MPI
-MPI_Init(&argc,&argv);
+    // initialize MPI
+    MPI_Init(&argc,&argv);
 
-// get number of tasks
-MPI_Comm_size(MPI_COMM_WORLD,&numtasks);
+    // get number of tasks
+    MPI_Comm_size(MPI_COMM_WORLD,&numtasks);
 
-// get my rank
-MPI_Comm_rank(MPI_COMM_WORLD,&rank);
+    // get my rank
+    MPI_Comm_rank(MPI_COMM_WORLD,&rank);
 
-// this one is obvious
-MPI_Get_processor_name(hostname, &len);
-printf ("Number of tasks= %d My rank= %d Running on %s\n", numtasks,rank,hostname);
-
-
-    // do some work with message passing
+    // this one is obvious
+    MPI_Get_processor_name(hostname, &len);
+    printf ("Number of tasks= %d My rank= %d Running on %s\n", numtasks,rank,hostname);
 
 
-// done with MPI
-MPI_Finalize();
+        // do some work with message passing
+
+
+    // done with MPI
+    MPI_Finalize();
 }
 ```
 

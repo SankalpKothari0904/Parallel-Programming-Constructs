@@ -1,5 +1,5 @@
 /******************************************************************************
-* FILE: mpi_bug5.c
+* FILE: mpi_bug3.c
 * DESCRIPTION: 
 *   This is an "unsafe" program. It's behavior varies depending upon the
 *   platform and MPI library

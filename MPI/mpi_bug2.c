@@ -1,5 +1,5 @@
 /******************************************************************************
-* FILE: mpi_bug4.c
+* FILE: mpi_bug2.c
 * DESCRIPTION:
 *   This program gives the wrong result for Final sum - compare to mpi_array.
 ****************************************************************************/

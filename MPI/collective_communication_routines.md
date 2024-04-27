@@ -36,7 +36,6 @@ Synchronization operation. Creates a barrier synchronization in a group. Each ta
 
 ```
 MPI_Barrier (comm)
-MPI_BARRIER (comm,ierr)
 ```
 
 **MPI_Bcast**
@@ -45,7 +44,6 @@ Data movement operation. Broadcasts (sends) a message from the process with rank
 
 ```
 MPI_Bcast (&buffer,count,datatype,root,comm)
-MPI_BCAST (buffer,count,datatype,root,comm,ierr)
 ```
 
 **MPI_Scatter**
@@ -54,7 +52,6 @@ Data movement operation. Distributes distinct messages from a single source task
 
 ```
 MPI_Scatter (&sendbuf,sendcnt,sendtype,&recvbuf,recvcnt,recvtype,root,comm)
-MPI_SCATTER (sendbuf,sendcnt,sendtype,recvbuf,recvcnt,recvtype,root,comm,ierr)
 ```
 
 **MPI_Gather**
@@ -63,7 +60,6 @@ Data movement operation. Gathers distinct messages from each task in the group t
 
 ```
 MPI_Gather (&sendbuf,sendcnt,sendtype,&recvbuf,recvcount,recvtype,root,comm)
-MPI_GATHER (sendbuf,sendcnt,sendtype,recvbuf,recvcount,recvtype,root,comm,ierr)
 ```
 
 **MPI_Allgather**
@@ -72,7 +68,6 @@ Data movement operation. Concatenation of data to all tasks in a group. Each tas
 
 ```
 MPI_Allgather (&sendbuf,sendcount,sendtype,&recvbuf,recvcount,recvtype,comm)
-MPI_ALLGATHER (sendbuf,sendcount,sendtype,recvbuf,recvcount,recvtype,comm,info)
 ```
 
 **MPI_Reduce**
@@ -81,7 +76,6 @@ Collective computation operation. Applies a reduction operation on all tasks in 
 
 ```
 MPI_Reduce (&sendbuf,&recvbuf,count,datatype,op,root,comm)
-MPI_REDUCE (sendbuf,recvbuf,count,datatype,op,root,comm,ierr)
 ```
 
 <table style="border-collapse:collapse;border-spacing:0" class="tg">
@@ -166,7 +160,6 @@ Collective computation operation + data movement. Applies a reduction operation 
 
 ```
 MPI_Allreduce (&sendbuf,&recvbuf,count,datatype,op,comm)
-MPI_ALLREDUCE (sendbuf,recvbuf,count,datatype,op,comm,ierr)
 ```
 
 **MPI_Reduce_scatter**
@@ -175,7 +168,6 @@ Collective computation operation + data movement. First does an element-wise red
 
 ```
 MPI_Reduce_scatter (&sendbuf,&recvbuf,recvcount,datatype,op,comm)
-MPI_REDUCE_SCATTER (sendbuf,recvbuf,recvcount,datatype,op,comm,ierr)
 ```
 
 **MPI_Alltoall**
@@ -184,7 +176,6 @@ Data movement operation. Each task in a group performs a scatter operation, send
 
 ```
 MPI_Alltoall (&sendbuf,sendcount,sendtype,&recvbuf,recvcnt,recvtype,comm)
-MPI_ALLTOALL (sendbuf,sendcount,sendtype,recvbuf,recvcnt,recvtype,comm,ierr)
 ```
 
 **MPI_Scan**
@@ -193,7 +184,6 @@ Performs a scan operation with respect to a reduction operation across a task gr
 
 ```
 MPI_Scan (&sendbuf,&recvbuf,count,datatype,op,comm)
-MPI_SCAN (sendbuf,recvbuf,count,datatype,op,comm,ierr)
 ```
 
 ### Examples
@@ -205,32 +195,32 @@ MPI_SCAN (sendbuf,recvbuf,count,datatype,op,comm,ierr)
 
 main(int argc, char *argv[])  {
 int numtasks, rank, sendcount, recvcount, source;
-float sendbuf[SIZE][SIZE] = {
-    {1.0, 2.0, 3.0, 4.0},
-    {5.0, 6.0, 7.0, 8.0},
-    {9.0, 10.0, 11.0, 12.0},
-    {13.0, 14.0, 15.0, 16.0}  };
-float recvbuf[SIZE];
+    float sendbuf[SIZE][SIZE] = {
+        {1.0, 2.0, 3.0, 4.0},
+        {5.0, 6.0, 7.0, 8.0},
+        {9.0, 10.0, 11.0, 12.0},
+        {13.0, 14.0, 15.0, 16.0}  };
+    float recvbuf[SIZE];
 
-MPI_Init(&argc,&argv);
-MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-MPI_Comm_size(MPI_COMM_WORLD, &numtasks);
+    MPI_Init(&argc,&argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &numtasks);
 
-if (numtasks == SIZE) {
-    // define source task and elements to send/receive, then perform collective scatter
-    source = 1;
-    sendcount = SIZE;
-    recvcount = SIZE;
-    MPI_Scatter(sendbuf,sendcount,MPI_FLOAT,recvbuf,recvcount,
-                MPI_FLOAT,source,MPI_COMM_WORLD);
+    if (numtasks == SIZE) {
+        // define source task and elements to send/receive, then perform collective scatter
+        source = 1;
+        sendcount = SIZE;
+        recvcount = SIZE;
+        MPI_Scatter(sendbuf,sendcount,MPI_FLOAT,recvbuf,recvcount,
+                    MPI_FLOAT,source,MPI_COMM_WORLD);
 
-    printf("rank= %d  Results: %f %f %f %f\n",rank,recvbuf[0],
-        recvbuf[1],recvbuf[2],recvbuf[3]);
+        printf("rank= %d  Results: %f %f %f %f\n",rank,recvbuf[0],
+            recvbuf[1],recvbuf[2],recvbuf[3]);
     }
-else
-    printf("Must specify %d processors. Terminating.\n",SIZE);
+    else
+        printf("Must specify %d processors. Terminating.\n",SIZE);
 
-MPI_Finalize();
+    MPI_Finalize();
 }
 ```
 

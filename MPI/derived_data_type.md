@@ -74,7 +74,6 @@ This method creates a derived data type where elements are contiguous in memory,
 
 ```
 MPI_Type_contiguous (count,oldtype,&newtype)
-MPI_TYPE_CONTIGUOUS (count,oldtype,newtype,ierr)
 ```
 
 **MPI_Type_vector**
@@ -87,7 +86,6 @@ You can define a strided pattern of elements, specifying the displacement betwee
 
 ```
 MPI_Type_vector (count,blocklength,stride,oldtype,&newtype)
-MPI_TYPE_VECTOR (count,blocklength,stride,oldtype,newtype,ierr)
 ```
 
 **MPI_Type_indexed**
@@ -100,7 +98,6 @@ Allows you to specify a list of blocks with different sizes and displacements.
 
 ```
 MPI_Type_indexed (count,blocklens[],offsets[],old_type,&newtype)
-MPI_TYPE_INDEXED (count,blocklens(),offsets(),old_type,newtype,ierr)
 ```
 
 **MPI_Type_struct**
@@ -113,7 +110,6 @@ Similar to the C struct type, where you can define a collection of variables wit
 
 ```
 MPI_Type_struct (count,blocklens[],offsets[],old_types,&newtype)
-MPI_TYPE_STRUCT (count,blocklens(),offsets(),old_types,newtype,ierr)
 ```
 
 **MPI_Type_extent**
@@ -124,7 +120,6 @@ Returns the size in bytes of the specified data type. Useful for the MPI subrout
 
 ```
 MPI_Type_extent (datatype,&extent)
-MPI_TYPE_EXTENT (datatype,extent,ierr)
 ```
 
 **MPI_Type_commit**
@@ -133,7 +128,6 @@ Commits new datatype to the system. Required for all user constructed (derived) 
 
 ```
 MPI_Type_commit (&datatype)
-MPI_TYPE_COMMIT (datatype,ierr)
 ```
 
 **MPI_Type_free**
@@ -142,7 +136,6 @@ Deallocates the specified datatype object. Use of this routine is especially imp
 
 ```
 MPI_Type_free (&datatype)
-MPI_TYPE_FREE (datatype,ierr)
 ```
 
 ### Examples

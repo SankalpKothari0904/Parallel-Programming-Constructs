@@ -1,4 +1,10 @@
 # Multithreaded Parallel Programming In Python
+Reference Paper: [Multithreaded parallel Python through OpenMP support in Numba (researchgate.net)](https://www.researchgate.net/publication/353635635_Multithreaded_parallel_Python_through_OpenMP_support_in_Numba)
+
+Alternate Source: [Link to the paper (princeton.edu)](https://tigress-web.princeton.edu/~jdh4/PyOMPintro.pdf)
+
+---
+
 
 Python is not designed for parallel programming with threads, since its **Global Interpreter Lock (GIL)** prevents multiple threads from simultaneously accessing Python objects. This effectively prevents data races and makes Python naturally thread safe.
 
@@ -23,3 +29,8 @@ The project is currently restricted to a subset of the 21 most commonly used ele
 ![omp-common-core](Images/OMPCommonCore.png)
 
 (Credit: [SC19-Mattson-Common-Core.pdf (openmp.org)](https://www.openmp.org/wp-content/uploads/SC19-Mattson-Common-Core.pdf))
+
+## Further Details
+- [Numba And Implementation Details of PyOMP](ImplementationDetails.md)
+- [Results From The Paper](Results.md)
+

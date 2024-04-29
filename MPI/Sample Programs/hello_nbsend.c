@@ -1,5 +1,4 @@
 /******************************************************************************
-* FILE: mpi_helloNBsend.c
 * DESCRIPTION:
 *   MPI tutorial example code: Simple hello world program that uses nonblocking
 *   send/receive routines.

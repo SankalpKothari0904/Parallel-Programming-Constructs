@@ -1,5 +1,4 @@
 /******************************************************************************
-* FILE: mpi_helloBsend.c
 * DESCRIPTION:
 *   MPI tutorial example code: Simple hello world program that uses blocking
 *   send/receive routines.

@@ -1,12 +1,7 @@
-/******************************************************************************
-* DESCRIPTION:
-*   MPI tutorial example code: Simple hello world program that uses nonblocking
-*   send/receive routines.
-******************************************************************************/
 #include "mpi.h"
 #include <stdio.h>
 #include <stdlib.h>
-#define  MASTER		0
+#define  MASTER     0
 
 int main (int argc, char *argv[])
 {
@@ -49,25 +44,4 @@ int main (int argc, char *argv[])
    }
 
    MPI_Finalize();
-
 }
-
-/*
- * This MPI program demonstrates a simple communication pattern between pairs of processes.
- * Each process identifies its partner, sends its task ID to the partner, receives the partner's task ID,
- * and then prints out the partner information.
- *
- * The main function initializes MPI, retrieves the task ID and total number of tasks, and checks if the number of tasks is even.
- * If the number of tasks is even, the MASTER process (task 0) prints out the total number of MPI tasks.
- * Each process then prints out its task ID and the name of the processor it's running on.
- *
- * Processes are divided into pairs, and each pair communicates with its partner:
- *   - If the process has a task ID less than half of the total number of tasks,
- *     it calculates its partner as `numtasks/2 + taskid`, sends its task ID to the partner, and receives the partner's task ID.
- *   - If the process has a task ID greater than or equal to half of the total number of tasks,
- *     it calculates its partner as `taskid - numtasks/2`, receives the partner's task ID, and sends its task ID to the partner.
- *
- * After communication, each process prints out information about its partner.
- *
- * Finally, MPI is finalized, and the program exits.
- */

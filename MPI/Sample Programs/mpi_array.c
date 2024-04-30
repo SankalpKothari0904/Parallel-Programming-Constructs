@@ -13,7 +13,7 @@ int main (int argc, char *argv[]){
     double update(int myoffset, int chunk, int myid);
     MPI_Status status;
 
-    /***** Initializations *****/
+    /***** Initialize MPI and get task information *****/
     MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &numtasks);
     MPI_Comm_rank(MPI_COMM_WORLD,&taskid);
@@ -27,7 +27,7 @@ int main (int argc, char *argv[]){
     tag2 = 1;
     tag1 = 2;
 
-    /***** Master task only ******/
+    /***** Master task section ******/
     if (taskid == MASTER){
 
         /* Initialize the array */
@@ -39,7 +39,7 @@ int main (int argc, char *argv[]){
         printf("Initialized array sum = %e\n",sum);
         printf("numtasks= %d  chunksize= %d  leftover= %d\n",numtasks,chunksize,leftover);
 
-        /* Send each task its portion of the array - master keeps 1st part plus leftover elements */
+        /* Distribute array portions to other tasks */
         offset = chunksize + leftover;
             for (dest=1; dest<numtasks; dest++) {
             MPI_Send(&offset, 1, MPI_INT, dest, tag1, MPI_COMM_WORLD);
@@ -48,7 +48,7 @@ int main (int argc, char *argv[]){
             offset = offset + chunksize;
         }
 
-        /* Master does its part of the work */
+        /* Perform master's part of the work */
         offset = 0;
         mysum = update(offset, chunksize+leftover, taskid);
 
@@ -80,20 +80,19 @@ int main (int argc, char *argv[]){
     }  /* end of master section */
 
 
-    /***** Non-master tasks only *****/
-
+    /***** Non-master tasks section *****/
     if (taskid > MASTER) {
 
-        /* Receive my portion of array from the master task */
+        /* Receive array portion from the master task */
         source = MASTER;
         MPI_Recv(&offset, 1, MPI_INT, source, tag1, MPI_COMM_WORLD, &status);
         MPI_Recv(&data[offset], chunksize, MPI_DOUBLE, source, tag2, 
         MPI_COMM_WORLD, &status);
 
-        /* Do my part of the work */
+        /* Perform local computation */
         mysum = update(offset, chunksize, taskid);
 
-        /* Send my results back to the master task */
+        /* Send results back to the master task */
         dest = MASTER;
         MPI_Send(&offset, 1, MPI_INT, dest, tag1, MPI_COMM_WORLD);
         MPI_Send(&data[offset], chunksize, MPI_DOUBLE, MASTER, tag2, MPI_COMM_WORLD);
@@ -101,7 +100,7 @@ int main (int argc, char *argv[]){
         /* Use sum reduction operation to obtain final sum */
         MPI_Reduce(&mysum, &sum, 1, MPI_DOUBLE, MPI_SUM, MASTER, MPI_COMM_WORLD);
 
-    } /* end of non-master */
+    } /* end of non-master section */
 
     MPI_Finalize();
 }   

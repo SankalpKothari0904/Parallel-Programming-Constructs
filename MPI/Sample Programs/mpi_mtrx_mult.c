@@ -1,9 +1,3 @@
-/******************************************************************************
-* DESCRIPTION:  
-*   MPI Matrix Multiply - C Version
-*   In this code, the master task distributes a matrix multiply
-*   operation to numtasks-1 worker tasks.
-******************************************************************************/
 #include "mpi.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,9 +15,12 @@ int main (int argc, char *argv[]){
     double start_time, end_time; // Variables to store start and end times
     MPI_Status status;
 
+    // Initialize MPI
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &taskid);
     MPI_Comm_size(MPI_COMM_WORLD, &numtasks);
+
+    // Ensure at least two MPI tasks
     if (numtasks < 2 ) {
         printf("Need at least two MPI tasks. Quitting...\n");
         MPI_Abort(MPI_COMM_WORLD, rc);
@@ -33,9 +30,12 @@ int main (int argc, char *argv[]){
 
     start_time = MPI_Wtime(); // Start measuring wall clock time
 
+    // Master task section
     if (taskid == MASTER){
         printf("mpi_mm has started with %d tasks.\n", numtasks);
         printf("Initializing arrays...\n");
+
+        // Initialize matrix A and B
         for (i = 0; i < NRA; i++)
             for (j = 0; j < NCA; j++)
                 a[i][j] = i + j;
@@ -43,7 +43,7 @@ int main (int argc, char *argv[]){
             for (j = 0; j < NCB; j++)
                 b[i][j] = i * j;
 
-        /* Send matrix data to the worker tasks */
+        // Send matrix data to worker tasks
         averow = NRA / numworkers;
         extra = NRA % numworkers;
         offset = 0;
@@ -58,7 +58,7 @@ int main (int argc, char *argv[]){
             offset = offset + rows;
         }
 
-        /* Receive results from worker tasks */
+        // Receive results from worker tasks
         mtype = FROM_WORKER;
         for (i = 1; i <= numworkers; i++) {
             source = i;
@@ -70,7 +70,7 @@ int main (int argc, char *argv[]){
 
         end_time = MPI_Wtime(); // End measuring wall clock time
 
-        /* Print results */
+        // Print results
         printf("******************************************************\n");
         printf("Result Matrix:\n");
         for (i = 0; i < NRA; i++) {
@@ -84,6 +84,7 @@ int main (int argc, char *argv[]){
         printf("Time taken: %f seconds\n", end_time - start_time); // Print total execution time
     }
 
+    // Worker tasks section
     if (taskid > MASTER) {
         mtype = FROM_MASTER;
         MPI_Recv(&offset, 1, MPI_INT, MASTER, mtype, MPI_COMM_WORLD, &status);
@@ -91,6 +92,7 @@ int main (int argc, char *argv[]){
         MPI_Recv(&a, rows * NCA, MPI_DOUBLE, MASTER, mtype, MPI_COMM_WORLD, &status);
         MPI_Recv(&b, NCA * NCB, MPI_DOUBLE, MASTER, mtype, MPI_COMM_WORLD, &status);
 
+        // Perform matrix multiplication
         for (k = 0; k < NCB; k++)
             for (i = 0; i < rows; i++) {
                 c[i][k] = 0.0;

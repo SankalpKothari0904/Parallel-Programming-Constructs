@@ -1,8 +1,3 @@
-/***************************************************************************
- * DESCRIPTION:  
- *   Serial pi Calculation - C Version
- *   This program calculates pi using a "dartboard" algorithm.
-***************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -30,11 +25,8 @@ int main(int argc, char *argv[]){
    printf("\nReal value of PI: 3.1415926535897 \n");
 }
 
-
-/*****************************************************************************
- * dboard
- *****************************************************************************/
 #define sqr(x)	((x)*(x))
+
 long random(void);
 
 double dboard(int darts){
@@ -45,10 +37,7 @@ double dboard(int darts){
    int score,            /* number of darts that hit circle */
        n;
    unsigned int cconst;  /* must be 4-bytes in size */
-/*************************************************************************
- * The cconst variable must be 4 bytes. We check this and bail if it is
- * not the right size
- ************************************************************************/
+   
    if (sizeof(cconst) != 4) {
       printf("Wrong data size for cconst variable in dboard routine!\n");
       printf("See comments in source file. Quitting.\n");

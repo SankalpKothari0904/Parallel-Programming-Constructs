@@ -1,9 +1,3 @@
-/******************************************************************************
-* FILE: mpi_bug3.c
-* DESCRIPTION: 
-*   This is an "unsafe" program. It's behavior varies depending upon the
-*   platform and MPI library
-******************************************************************************/
 #include "mpi.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,11 +5,13 @@
 #define MSGSIZE 2000
 
 int main (int argc, char *argv[]){
+  // Variable declarations
   int        numtasks, rank, i, tag=111, dest=1, source=0, count=0;
   char       data[MSGSIZE];
   double     start, end, result;
   MPI_Status status;
 
+  // MPI Initialization
   MPI_Init(&argc,&argv);
   MPI_Comm_size(MPI_COMM_WORLD, &numtasks);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -28,13 +24,13 @@ int main (int argc, char *argv[]){
 
   /******************************* Send task **********************************/
   if (rank == 0) {
-
-    /* Initialize send data */
+    // Initialize send data
     for(i=0; i<MSGSIZE; i++)
       data[i] =  'x';
 
     start = MPI_Wtime();
     while (1) {
+      // Continuously send data to the receiving task
       MPI_Send(data, MSGSIZE, MPI_BYTE, dest, tag, MPI_COMM_WORLD);
       count++;
       if (count % 10 == 0) {
@@ -49,6 +45,7 @@ int main (int argc, char *argv[]){
 
   if (rank == 1) {
     while (1) {
+      // Continuously receive data from the sending task
       MPI_Recv(data, MSGSIZE, MPI_BYTE, source, tag, MPI_COMM_WORLD, &status);
       /* Do some work  - at least more than the send task */
       result = 0.0;

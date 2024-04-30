@@ -77,7 +77,12 @@ for (i=1; i<ntasks; i++) {
 
 Blocking sends in MPI ensure that the sender does not proceed with further instructions until the communication operation is completed. This blocking behavior guarantees that the sender's data is safe to be accessed or modified after the send operation returns. Once the send operation completes, the sender can safely reuse or modify the sent data without worrying about potential data corruption.
 
-On the other hand, non-blocking sends in MPI (e.g., MPI_Isend) return immediately after initiating the communication operation without waiting for it to complete. This non-blocking behavior allows the sender to continue executing other instructions while the send operation is in progress. However, this also means that the sender must be cautious not to modify or access the sent data until the communication operation completes. If the sender accesses or modifies the data before the send operation finishes, it may lead to data corruption or incorrect results.
+On the other hand, non-blocking sends in MPI (e.g., MPI_Isend) return immediately after initiating the communication operation without waiting for it to complete. This non-blocking behavior allows the sender to continue executing other instructions while the send operation is in progress. 
+
+<div style="background-color: #ffffcc; border: 1px solid #ccc; padding: 10px; border-radius: 8px; color: black;">
+Non-blocking sends in MPI are considered "unsafe" because they do not ensure that the data being sent remains valid until the send operation completes. This can lead to undefined behavior if the data is modified or deallocated before the send operation finishes. It's like trying to mail a letter that you've already thrown away.
+</div>
+
 
 ### Order and Fairness
 

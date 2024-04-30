@@ -1,32 +1,29 @@
 # Virtual Topologies
 
-### What Are They?
+## Introduction
 
-In terms of MPI, a virtual topology describes a mapping/ordering of MPI processes into a geometric "shape". Virtual topologies allow processes in a communicator to be organized into a logical structure, such as a one-dimensional array, a two-dimensional grid, or even a more complex graph.
+In MPI programming, virtual topologies help organize processes for easier communication. Let's explore what they are, why they're useful, and how they're used.
 
-These virtual topologies provide a convenient way to define the communication pattern among processes in a structured manner, which can simplify the development of parallel algorithms.
+## What Are Virtual Topologies?
 
-The two main types of topologies supported by MPI are Cartesian (grid) and Graph.
+In MPI, a virtual topology represents how MPI processes are organized into various geometric shapes. These shapes could be simple, like a one-dimensional array, or more complex, like a two-dimensional grid or a graph.
 
-MPI topologies are virtual - there may be no relation between the physical structure of the parallel machine and the process topology.
+We can think of them as a way to organize MPI processes into shapes like grids or graphs. They make it easier to talk to each other, simplifying parallel programming.
 
-Virtual topologies are built upon MPI communicators and groups.
+MPI topologies are virtual, meaning they may not directly reflect the physical layout of the parallel machine. Instead, they're constructed based on the logical organization of processes within MPI communicators and groups.
 
-They must be "programmed" by the application developer.
+The programmer is responsible for programming these virtual topologies according to the requirements of their application
 
-### Why Use Them?
+## Why Use Them?
 
-**Convenience**
+### Convenience
+Virtual topologies match common communication patterns, making it easier to write code. For example, grids are great for neighbors talking to each other.
 
-Virtual topologies may be useful for applications with specific communication patterns - patterns that match an MPI topology structure. For example, a Cartesian topology might prove convenient for an application that requires 4-way nearest neighbor communications for grid based data.
-
-**Communication Efficiency**
+### Communication Efficiency
 
 Some hardware architectures may impose penalties for communications between successively distant "nodes".
 
-A particular implementation may optimize process mapping based upon the physical characteristics of a given parallel machine.
-
-The mapping of processes into an MPI virtual topology is dependent upon the MPI implementation, and may be totally ignored.
+Virtual Topologies help speed up communication between processes by organizing them effectively, especially on different hardware.
 
 ### Example:
 
@@ -34,23 +31,26 @@ A simplified mapping of processes into a Cartesian virtual topology appears belo
 
 ![topology](Cartesian_topology.gif)
 
-MPI provides functions to create and manipulate virtual topologies. The most commonly used functions include:
+## Types of Virtual Topologies
 
-1. **MPI_Cart_create**: This function creates a Cartesian grid topology. It takes the communicator, number of dimensions, array of the number of processes in each dimension, and an array of periodicity flags as input and returns a new communicator with a Cartesian topology.
+### Cartesian (Grid) Topology
+Processes are organized in a grid, handy for structured communication like neighbor chats.
 
-2. **MPI_Cart_coords**: Given a rank in a Cartesian communicator, this function returns the coordinates of the process in the grid.
+### Graph Topology
+Processes are like dots connected by lines, allowing for flexible communication patterns.
 
-3. **MPI_Cart_rank**: Given the coordinates in a Cartesian communicator, this function returns the rank of the corresponding process in the grid.
+## Key MPI Topology Functions
 
-4. **MPI_Cart_shift**: Given a direction and a displacement, this function returns the ranks of neighboring processes in the specified direction.
+1. **MPI_Cart_create**: Sets up a grid for processes to talk.
+2. **MPI_Cart_coords**: Figures out where a process is in the grid.
+3. **MPI_Cart_rank**: Finds the number of a process in the grid.
+4. **MPI_Cart_shift**: Helps find neighboring processes.
+5. **MPI_Graph_create**: Sets up a general graph for processes to connect.
+6. **MPI_Dims_create**: Figures out grid dimensions based on the number of processes.
 
-5. **MPI_Graph_create**: This function creates a general graph topology. It takes the communicator, number of nodes, array of node degrees, array of edges, and a flag indicating if the edges are directed or undirected as input and returns a new communicator with a graph topology.
+These functions make it easy to set up communication patterns. For example, a 2D grid is perfect for some problems, while a graph might work better for others.
 
-6. **MPI_Dims_create**: This function is used to find a set of dimensions that can be used to decompose a given number of processes into a Cartesian grid.
-
-These functions allow developers to define various communication patterns that suit the problem at hand. For example, a 2D grid topology may be suitable for stencil-based computations, while a graph topology may be appropriate for irregular communication patterns.
-
-Using virtual topologies in MPI can improve the readability, maintainability, and efficiency of parallel programs by encapsulating the communication logic into a structured format.
+Using virtual topologies in MPI makes parallel programming simpler and more efficient.
 
 ### Code examples
 

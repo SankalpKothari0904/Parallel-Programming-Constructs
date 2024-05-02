@@ -115,7 +115,7 @@ the full range of OpenMP constructs.
 
 - The paper focusses on the implementation of the 21 most commly used elements of OpenMp called "OpenMP Common Core"
 
-
+![OpenMP Elements in PyOMP](./Summary.png)
 
 - Link to PyOMP Implementation and Setup : https://github.com/Python-for-HPC/PyOMP
 

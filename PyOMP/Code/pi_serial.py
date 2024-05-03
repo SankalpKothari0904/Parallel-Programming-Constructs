@@ -10,9 +10,9 @@ def compute_pi_serial(n):
     return pi
 
 n = 100000000
-start_time = time.time()
-pi = compute_pi_serial(n)
-end_time = time.time()
-
-print("Time taken:", end_time - start_time, "seconds")
-print("Approximation of pi:", pi)
+for i in range(15):
+    start_time = time.time()
+    pi = compute_pi_serial(n)
+    end_time = time.time()
+    print("Time taken:", end_time - start_time, "seconds")
+    print("Approximation of pi:", pi)

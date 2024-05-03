@@ -1,88 +1,54 @@
 # Derived Data Types
 
-<table style="border-collapse:collapse;border-spacing:0" class="tg">
-  <thead>
-    <tr>
-      <th style="background-color:#98ABCE;border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;position:-webkit-sticky;position:sticky;text-align:center;top:-1px;vertical-align:middle;will-change:transform;word-break:normal" colspan="2">
-        <span style="background-color:#98ABCE">C Data Types</span>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">
-        <span style="font-weight:bold">MPI_CHAR </span><br>
-        <span style="font-weight:bold">MPI_WCHAR </span><br>
-        <span style="font-weight:bold">MPI_SHORT </span><br>
-        <span style="font-weight:bold">MPI_INT </span><br>
-        <span style="font-weight:bold">MPI_LONG </span><br>
-        <span style="font-weight:bold">MPI_LONG_LONG_INT  </span><br>
-        <span style="font-weight:bold">MPI_LONG_LONG	 	  </span><br>
-        <span style="font-weight:bold">MPI_SIGNED_CHAR </span><br>
-        <span style="font-weight:bold">MPI_UNSIGNED_CHAR </span><br>
-        <span style="font-weight:bold">MPI_UNSIGNED_SHORT </span><br>
-        <span style="font-weight:bold">MPI_UNSIGNED_LONG</span><br>
-        <span style="font-weight:bold">MPI_UNSIGNED </span><br>
-        <span style="font-weight:bold">MPI_FLOAT </span><br>
-        <span style="font-weight:bold">MPI_DOUBLE</span><br>
-        <span style="font-weight:bold">MPI_LONG_DOUBLE </span>
-      </td>
-      <td style="border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">
-        <span style="font-weight:bold">MPI_C_COMPLEX </span><br>
-        <span style="font-weight:bold">MPI_C_FLOAT_COMPLEX </span><br>
-        <span style="font-weight:bold">MPI_C_DOUBLE_COMPLEX </span><br>
-        <span style="font-weight:bold">MPI_C_LONG_DOUBLE_COMPLEX	 	  </span><br>
-        <span style="font-weight:bold">MPI_C_BOOL </span><br>
-        <span style="font-weight:bold">MPI_LOGICAL </span><br>
-        <span style="font-weight:bold">MPI_C_LONG_DOUBLE_COMPLEX 	 </span><br>
-        <span style="font-weight:bold">MPI_INT8_T  </span><br>
-        <span style="font-weight:bold">MPI_INT16_T </span><br>
-        <span style="font-weight:bold">MPI_INT32_T </span><br>
-        <span style="font-weight:bold">MPI_INT64_T	 	  </span><br>
-        <span style="font-weight:bold">MPI_UINT8_T  </span><br>
-        <span style="font-weight:bold">MPI_UINT16_T  </span><br>
-        <span style="font-weight:bold">MPI_UINT32_T  </span><br>
-        <span style="font-weight:bold">MPI_UINT64_T </span><br>
-        <span style="font-weight:bold">MPI_BYTE </span><br>
-        <span style="font-weight:bold">MPI_PACKED </span>
-      </td>
-    </tr>
-  </tbody>
-</table>
+| C Data Types           |                        |
+|------------------------|------------------------|
+| **MPI_CHAR**           | **MPI_C_BOOL**         |
+| **MPI_WCHAR**          | **MPI_C_FLOAT_COMPLEX**|
+| **MPI_SHORT**          | **MPI_C_DOUBLE_COMPLEX**|
+| **MPI_INT**            | **MPI_C_LONG_DOUBLE_COMPLEX**|
+| **MPI_LONG**           | **MPI_BYTE**          |
+| **MPI_LONG_LONG_INT**  | **MPI_LOGICAL**       |
+| **MPI_LONG_LONG**      | **MPI_C_LONG_DOUBLE_COMPLEX**|
+| **MPI_SIGNED_CHAR**    | **MPI_INT8_T**        |
+| **MPI_UNSIGNED_CHAR**  | **MPI_INT16_T**       |
+| **MPI_UNSIGNED_SHORT** | **MPI_INT32_T**       |
+| **MPI_UNSIGNED_LONG**  | **MPI_INT64_T**       |
+| **MPI_UNSIGNED**       | **MPI_UINT8_T**       |
+| **MPI_FLOAT**          | **MPI_UINT16_T**      |
+| **MPI_DOUBLE**         | **MPI_UINT32_T**      |
+| **MPI_LONG_DOUBLE**    | **MPI_UINT64_T**      |
+| **MPI_C_COMPLEX**      | **MPI_PACKED**          |
+-----------------------------------------------------
 
 
-MPI also provides facilities for you to define your own data structures based upon sequences of the MPI primitive data types. Such user defined structures are called derived data types.
+MPI also provides facilities for defining custom data structures based on sequences of the MPI primitive data types. These user-defined structures are referred to as derived data types.
 
-Derived data types in MPI are user-defined data structures composed of sequences of primitive data types.
+Derived data types in MPI allow for the creation of non-contiguous data structures conveniently, treating them as if they were contiguous.
 
-Primitive data types are contiguous. Derived data types allow you to specify non-contiguous data in a convenient manner and to treat it as though it was contiguous.
+There are several methods provided by MPI for constructing derived data types:
 
-MPI provides several methods for constructing derived data types:
-* Contiguous
-* Vector
-* Indexed
-* Struct
+- Contiguous
+- Vector
+- Indexed
+- Struct
 
 ### Derived Data Type Routines
 
-**MPI_Type_contiguous**
+#### MPI_Type_contiguous
 
-The simplest constructor. Produces a new data type by making count copies of an existing data type.
+This routine creates a new data type by replicating a given data type a specified number of times. It results in a derived data type where elements are contiguous in memory, akin to an array.
 
-This method creates a derived data type where elements are contiguous in memory, similar to an array.
-
-
-```
-MPI_Type_contiguous (count,oldtype,&newtype)
+```code
+MPI_Type_contiguous(count, oldtype, &newtype)
 ```
 
 **MPI_Type_vector**
 
 **MPI_Type_hvector**
 
-Similar to contiguous, but allows for regular gaps (stride) in the displacements. MPI_Type_hvector is identical to MPI_Type_vector except that stride is specified in bytes.
+These routines are similar to MPI_Type_contiguous but allow for regular gaps (stride) in the displacements. MPI_Type_hvector is the same as MPI_Type_vector except that the stride is specified in bytes. 
 
-You can define a strided pattern of elements, specifying the displacement between consecutive elements.
+They enable defining a strided pattern of elements by specifying the displacement between consecutive elements.
 
 ```
 MPI_Type_vector (count,blocklength,stride,oldtype,&newtype)
@@ -92,9 +58,9 @@ MPI_Type_vector (count,blocklength,stride,oldtype,&newtype)
 
 **MPI_Type_hindexed**
 
-An array of displacements of the input data type is provided as the map for the new data type. MPI_Type_hindexed is identical to MPI_Type_indexed except that offsets are specified in bytes.
+These routines allow specifying a list of blocks with different sizes and displacements. An array of displacements of the input data type is provided as the map for the new data type. 
 
-Allows you to specify a list of blocks with different sizes and displacements.
+MPI_Type_hindexed is similar to MPI_Type_indexed except that offsets are specified in bytes.
 
 ```
 MPI_Type_indexed (count,blocklens[],offsets[],old_type,&newtype)
@@ -102,24 +68,12 @@ MPI_Type_indexed (count,blocklens[],offsets[],old_type,&newtype)
 
 **MPI_Type_struct**
 
-The new data type is formed according to completely defined map of the component data types.
+This routine forms a new data type according to a completely defined map of the component data types. Similar to the C struct type, it allows defining a collection of variables with different data types and offsets.
 
-Similar to the C struct type, where you can define a collection of variables with different data types and offsets.
-
-**NOTE**: This function is deprecated in MPI-2.0 and replaced by MPI_Type_create_struct in MPI-3.0
+`**NOTE**: This function is deprecated in MPI-2.0 and replaced by MPI_Type_create_struct in MPI-3.0`
 
 ```
 MPI_Type_struct (count,blocklens[],offsets[],old_types,&newtype)
-```
-
-**MPI_Type_extent**
-
-Returns the size in bytes of the specified data type. Useful for the MPI subroutines that require specification of offsets in bytes.
-
-**NOTE**: This function is deprecated in MPI-2.0 and replaced by MPI_Type_get_extent in MPI-3.0
-
-```
-MPI_Type_extent (datatype,&extent)
 ```
 
 **MPI_Type_commit**

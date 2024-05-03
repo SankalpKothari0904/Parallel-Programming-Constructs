@@ -2,6 +2,7 @@ from numba import njit
 import numpy as np
 from numba.openmp import openmp_context as openmp
 from numba.openmp import omp_set_num_threads, omp_get_thread_num, omp_get_wtime, omp_get_num_threads
+from time import sleep
 
 MAX_THREADS = 16    # Maximum number of threads possible (may depend on the system).
 
@@ -28,4 +29,9 @@ def pi_func(num_steps):
     print("pi = ", pi, "in", run_time, "seconds", "with", num_steps, "steps")
     return pi
 
-pi = pi_func(100000000)
+
+for i in range(15):
+    start_jit = omp_get_wtime()
+    pi_func(100000000)
+    print("Time taken with JIT compilation:", omp_get_wtime() - start_jit)
+    sleep(1)

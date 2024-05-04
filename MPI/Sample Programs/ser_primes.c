@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
     printf("Done. Largest prime is %d Total primes %d\n", foundone, pc);
     
     // Calculate and print the elapsed time
-    printf("Wall clock time elapsed: %.2lf seconds\n", (double)(end_time - start_time) / CLOCKS_PER_SEC);
+    printf("Wall clock time elapsed: %.6lf seconds\n", (double)(end_time - start_time) / CLOCKS_PER_SEC);
 
     return 0;
 }

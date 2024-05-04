@@ -108,7 +108,7 @@ A send operation occurs 5 seconds before the receive is ready - where is the mes
 Multiple sends arrive at the same receiving task which can only accept one send at a time - what happens to the messages that are “backing up”?
 The MPI implementation (not the MPI standard) decides what happens to data in these types of cases. Typically, a system buffer area is reserved to hold data in transit. For example:
 
-![Buffer Recv](buffer_recv.jpg)
+![Buffer Recv](Images/buffer_recv.jpg)
 
 System buffer space is:
 

@@ -8,7 +8,7 @@
 
 Some sample collective communication operations -
 
-![collective_comm](collective_comm.gif)
+![collective_comm](Images/collective_comm.gif)
 
 #### Scope:
 
@@ -88,7 +88,7 @@ MPI_Reduce (&sendbuf,&recvbuf,count,datatype,op,root,comm)
 
 Collective computation operation + data movement. First does an element-wise reduction on a vector across all tasks in the group. Next, the result vector is split into disjoint segments and distributed across the tasks. This is equivalent to an MPI_Reduce followed by an MPI_Scatter operation. 
 
-![image](MPI_Reduce_scatter.gif)
+![image](Images/MPI_Reduce_scatter.gif)
 
 ```
 MPI_Reduce_scatter (&sendbuf,&recvbuf,recvcount,datatype,op,comm)
@@ -106,7 +106,7 @@ MPI_Alltoall (&sendbuf,sendcount,sendtype,&recvbuf,recvcnt,recvtype,comm)
 
 Performs a scan operation with respect to a reduction operation across a task group. 
 
-![image](MPI_Scan.gif)
+![image](Images/MPI_Scan.gif)
 
 ```
 MPI_Scan (&sendbuf,&recvbuf,count,datatype,op,comm)

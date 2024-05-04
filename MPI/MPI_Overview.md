@@ -6,11 +6,11 @@ Simply stated, the goal of the Message Passing Interface is to provide a widely 
 
 Originally, MPI was designed for distributed memory architectures, which were becoming increasingly popular at that time (1980s - early 1990s).
 
-![Distributed Memory](distributed_mem.jpg)
+![Distributed Memory](Images/distributed_mem.jpg)
 
 As architecture trends changed, shared memory SMPs were combined over networks creating hybrid distributed memory / shared memory systems.
 
-![Hybrid Memory](hybrid_mem.jpg)
+![Hybrid Memory](Images/hybrid_mem.jpg)
 
 Today, MPI runs on virtually any hardware platform:
 
@@ -34,7 +34,7 @@ All parallelism is explicit: the programmer is responsible for correctly identif
 
 MPI calls have a specific format:
 
-![Prog Structure](prog_structure.jpg)
+![Prog Structure](Images/prog_structure.jpg)
 
 #### Communicators and Groups
 

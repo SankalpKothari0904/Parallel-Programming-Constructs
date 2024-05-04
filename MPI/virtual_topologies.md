@@ -29,7 +29,7 @@ Virtual Topologies help speed up communication between processes by organizing t
 
 A simplified mapping of processes into a Cartesian virtual topology appears below:
 
-![topology](Cartesian_topology.gif)
+![topology](Images/Cartesian_topology.gif)
 
 ## Types of Virtual Topologies
 

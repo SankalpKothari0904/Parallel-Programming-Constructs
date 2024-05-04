@@ -2,50 +2,44 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define NRA 62              /* number of rows in matrix A */
-#define NCA 15              /* number of columns in matrix A */
-#define NCB 7               /* number of columns in matrix B */
+#define N 500 // Size of the matrices
 
-int main(int argc, char *argv[]) {
-    int i, j, k;            /* misc */
-    double a[NRA][NCA],     /* matrix A to be multiplied */
-           b[NCA][NCB],     /* matrix B to be multiplied */
-           c[NRA][NCB];     /* result matrix C */
-    clock_t start, end;     /* variables to store start and end times */
-
-    printf("Starting serial matrix multiply example...\n");
-    printf("Using matrix sizes a[%d][%d], b[%d][%d], c[%d][%d]\n", NRA, NCA, NCA, NCB, NRA, NCB);
-
-    /* Initialize A, B, and C matrices */
-    printf("Initializing matrices...\n");
-    for (i = 0; i < NRA; i++)
-        for (j = 0; j < NCA; j++)
-            a[i][j] = i + j;
-    for (i = 0; i < NCA; i++)
-        for (j = 0; j < NCB; j++)
-            b[i][j] = i * j;
-    for (i = 0; i < NRA; i++)
-        for (j = 0; j < NCB; j++)
-            c[i][j] = 0.0;
-
-    /* Perform matrix multiply */
-    printf("Performing matrix multiply...\n");
-    start = clock(); // Start measuring time
-    for (i = 0; i < NRA; i++)
-        for (j = 0; j < NCB; j++)
-            for (k = 0; k < NCA; k++)
-                c[i][j] += a[i][k] * b[k][j];
-    end = clock(); // End measuring time
-
-    printf("Here is the result matrix:\n");
-    for (i = 0; i < NRA; i++) {
-        for (j = 0; j < NCB; j++)
-            printf("%6.2f   ", c[i][j]);
-        printf("\n");
+void initializeMatrix(double matrix[N][N]) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            matrix[i][j] = (double) rand() / RAND_MAX; // Random initialization
+        }
     }
-    printf("Done.\n");
+}
 
-    double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC; // Calculate time taken in seconds
-    printf("Time taken: %f seconds\n", time_taken); // Print time taken
+void multiplyMatrices(double matrixA[N][N], double matrixB[N][N], double result[N][N]) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            double sum = 0.0;
+            for (int k = 0; k < N; k++) {
+                sum += matrixA[i][k] * matrixB[k][j];
+            }
+            result[i][j] = sum;
+        }
+    }
+}
+
+int main() {
+    double matrixA[N][N];
+    double matrixB[N][N];
+    double result[N][N];
+    srand(time(NULL)); // Seed the random number generator
+
+    initializeMatrix(matrixA);
+    initializeMatrix(matrixB);
+
+    clock_t start_time = clock(); // Record start time
+
+    multiplyMatrices(matrixA, matrixB, result);
+
+    clock_t end_time = clock(); // Record end time
+
+    printf("Elapsed time (serial): %.4f seconds\n", (double)(end_time - start_time) / CLOCKS_PER_SEC);
+
     return 0;
 }

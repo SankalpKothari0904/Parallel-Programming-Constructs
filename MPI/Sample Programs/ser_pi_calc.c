@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 void srandom (unsigned seed);  
 double dboard (int darts);
 
-#define DARTS 10000   	/* number of throws at dartboard */
+#define DARTS 500000   	/* number of throws at dartboard */
 #define ROUNDS 100    	/* number of times "darts" is iterated */
 
 int main(int argc, char *argv[]){
@@ -13,6 +14,7 @@ int main(int argc, char *argv[]){
    int i, n;
 
    printf("Starting serial version of pi calculation using dartboard algorithm...\n");
+   clock_t start = clock();
    srandom (5);            /* seed the random number generator */
    avepi = 0;
    for (i = 0; i < ROUNDS; i++) {
@@ -21,7 +23,10 @@ int main(int argc, char *argv[]){
       avepi = ((avepi * i) + pi)/(i + 1); 
       printf("   After %3d throws, average value of pi = %10.8f\n",
             (DARTS * (i + 1)),avepi);
-   }    
+   }
+   clock_t end = clock();
+   double time = (double)(end-start)/CLOCKS_PER_SEC;
+   printf("\nElpased time: %f seconds\n",time);    
    printf("\nReal value of PI: 3.1415926535897 \n");
 }
 

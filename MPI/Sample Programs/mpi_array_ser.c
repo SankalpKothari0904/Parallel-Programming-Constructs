@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h> // Include time.h for timing functions
-#define ARRAYSIZE 20000
+#define ARRAYSIZE 2000000
 
 int main(int argc, char *argv[]){
     int i;   /* loop variable */

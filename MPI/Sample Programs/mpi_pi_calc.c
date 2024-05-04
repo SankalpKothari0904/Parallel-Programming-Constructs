@@ -3,11 +3,14 @@
 #include <stdlib.h>
 
 /* Declaration of constants and variables */
-#define DARTS 50000     /* number of throws at dartboard */
+#define DARTS 500000     /* number of throws at dartboard */
 #define ROUNDS 100      /* number of times "darts" is iterated */
 #define MASTER 0        /* task ID of master task */
 #define FROM_MASTER 1   /* setting a message type */
 #define FROM_WORKER 2   /* setting a message type */
+
+double dboard(int darts);
+#define sqr(x) ((x)*(x))
 
 int main (int argc, char *argv[]){
    double homepi, pi, avepi, pirecv, pisum;
@@ -22,6 +25,8 @@ int main (int argc, char *argv[]){
 
    /* Set seed for random number generator equal to task ID */
    srandom (taskid);
+
+   double start = MPI_Wtime();
 
    /* Initialize average pi value */
    avepi = 0;
@@ -51,11 +56,14 @@ int main (int argc, char *argv[]){
          printf("   After %8d throws, average value of pi = %10.8f\n",
                   (DARTS * (i + 1)),avepi);
          }    
-   } 
+   }
+
+   double end = MPI_Wtime(); 
 
    /* Print real value of PI */
    if (taskid == MASTER)
       printf ("\nReal value of PI: 3.1415926535897 \n");
+      printf ("Time taken : %f seconds\n",end-start);
 
    /* Finalize MPI */
    MPI_Finalize();

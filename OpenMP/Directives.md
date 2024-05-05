@@ -31,7 +31,7 @@ An orphaned directive can span routines and possibly code files.
 ### Dynamic Extent
 The dynamic extent of a directive includes both its static (lexical) extent and the extents of its orphaned directives.
 ### Examples
-```
+```Fortran
 PROGRAM TEST  
     ...  
 !$OMP PARALLEL  
@@ -48,7 +48,7 @@ PROGRAM TEST
 !$OMP END PARALLEL
 ```
 
-```
+```Fortran
 SUBROUTINE SUB1  
     ...  
 !$OMP CRITICAL  

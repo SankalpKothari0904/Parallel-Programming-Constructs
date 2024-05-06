@@ -1,15 +1,3 @@
-/******************************************************************************
-* DESCRIPTION:
-*   Generates prime numbers.  All tasks distribute the work evenly, taking
-*   every nth number, where n is the stride computed as:  (rank *2) + 1
-*   so that even numbers are automatically skipped.  The method of using
-*   stride is preferred over contiguous blocks of numbers, since numbers
-*   in the higher range require more work to compute and may result in 
-*   load imbalance.  This program demonstrates embarrassing parallelism.
-*   Collective communications calls are used to reduce the only two data
-*   elements requiring communications: the number of primes found and
-*   the largest prime.
-******************************************************************************/
 #include "mpi.h"
 #include <stdio.h>
 #include <stdlib.h>

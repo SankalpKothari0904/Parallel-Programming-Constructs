@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 /* Declaration of constants and variables */
-#define DARTS 50000     /* number of throws at dartboard */
+#define DARTS 500000     /* number of throws at dartboard */
 #define ROUNDS 100      /* number of times "darts" is iterated */
 #define MASTER 0        /* task ID of master task */
 #define FROM_MASTER 1   /* setting a message type */

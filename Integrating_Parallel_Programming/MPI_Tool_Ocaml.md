@@ -87,6 +87,26 @@ let rank = Mpi.comm_rank Mpi.comm_world in
 ```
 let size = Mpi.comm_size Mpi.comm_world in
 ```
-
-
 - Some more examples can be found in the link provided, need to setup the ocamlmpi module.
+
+### Flow of OCampMpi execution
+
+- OCamlMPI provides bindings to the native MPI library through the use of OCaml's foreign function interface (FFI). Here's a general overview of how it works:
+
+1. **FFI**: OCaml allows interfacing with code written in other languages, such as C, through its FFI mechanism. This mechanism enables OCaml code to call functions defined in external libraries and vice versa.
+
+2. **Binding Generation**: OCamlMPI provides OCaml bindings for the MPI functions by generating OCaml code that interfaces with the C MPI library. This code defines OCaml functions that wrap the corresponding MPI functions, handling conversions between OCaml data types and C data types as needed.
+
+3. **Compilation**: When you compile OCamlMPI-based code, the OCaml compiler (ocamlc or ocamlopt) compiles both the OCaml code and the generated C code into bytecode or native code, respectively.
+
+4. **Linking**: During the linking stage, the OCaml compiler links the compiled OCaml code with the MPI library (e.g., MPICH or Open MPI) and any other necessary libraries. This allows the resulting executable to make calls to the MPI functions provided by the native MPI library.
+5. **Execution**: When you run the compiled OCamlMPI program, it interacts with the native MPI library to perform message passing and other parallel computing tasks. The native MPI library handles the actual communication between processes running on different nodes in the cluster or computing environment.
+
+
+```
+ocamlc -I +ocamlmpi -o bcast mpi.cma unix.cma bcast.ml            
+
+mpiexec -n 4 ./bcast                                          
+```
+
+- The above is a example of running the ocamlmpi file, where we provie the 

@@ -9,5 +9,9 @@ if rank == 0:
     data = [(i+1)**2 for i in range(size)]
 else:
     data = None
+
+# Scatter the data
 data = comm.scatter(data, root=0)
-assert data == (rank+1)**2
+
+# Each process prints its own data
+print("Process", rank, "received data:", data)

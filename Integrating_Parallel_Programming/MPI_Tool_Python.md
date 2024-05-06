@@ -4,7 +4,7 @@
 
 MPI - the Message Passing Interface, is a standardized and portable message-passing system designed to function on a wide variety of parallel computers. The standard defines the syntax and semantics of library routines and allows users to write portable programs in the main scientific programming languages.
 
-The base compiler for mpi programms is the MPICH packages. MPICH, or Message Passing Interface, is a portable, high-performance implementation of the MPI standard for message-passing libraries.
+The base compiler for mpi programs is the MPICH packages. MPICH, or Message Passing Interface, is a portable, high-performance implementation of the MPI standard for message-passing libraries.
 
 This implementation mainly depends on the OS rather than programming language, so a good knowledge of the underlying Unix commands and its equivalent function calls in a programming language allow for MPI implementation in other languages.
 
@@ -76,3 +76,5 @@ $ mpiexec -n 4 python script.py
 ```
 
 This command is used to run a program using MPI got python. This command run the program with 4 processors.
+
+The remaining functionalities of MPI Python are explained in the documentation link 

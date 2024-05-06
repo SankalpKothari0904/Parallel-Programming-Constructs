@@ -78,3 +78,22 @@ $ mpiexec -n 4 python script.py
 This command is used to run a program using MPI got python. This command run the program with 4 processors.
 
 The remaining functionalities of MPI Python are explained in the documentation link 
+
+
+## Comparision of Runtimes
+
+### Matrix Multiplication
+
+![Matrix Multiplication Runtime Results](./Images/MatrixMul.png)
+
+- The image above shows the time taken to perform matrix multiplication on 2 500*500 matrix with random values.
+- We can see that the MPI program is 3 times faster than running matrix multiplication serially
+
+### Finding Number of Primes and Largest Prime
+
+- Serial
+![Primes Serial](./Images/Prime1.png)
+- Parallel
+![Primes Parallel](./Images/Prime2.png)
+
+- We can see that the MPI program is almost 4 times faster than the serial program

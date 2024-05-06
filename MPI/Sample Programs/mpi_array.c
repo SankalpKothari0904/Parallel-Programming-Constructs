@@ -1,7 +1,7 @@
 #include "mpi.h"
 #include <stdio.h>
 #include <stdlib.h>
-#define  ARRAYSIZE    20000000
+#define  ARRAYSIZE    2000000
 #define  MASTER       0
 
 double  data[ARRAYSIZE];

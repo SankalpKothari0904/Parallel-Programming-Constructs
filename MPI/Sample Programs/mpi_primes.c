@@ -80,7 +80,7 @@ int main (int argc, char *argv[]){
         MPI_Reduce(&foundone,&maxprime,1,MPI_INT,MPI_MAX,FIRST,MPI_COMM_WORLD);
         end_time=MPI_Wtime();
         printf("Done. Largest prime is %d Total primes %d\n",maxprime,pcsum);
-        printf("Wallclock time elapsed: %.2lf seconds\n",end_time-start_time);
+        printf("Wallclock time elapsed: %.6lf seconds\n",end_time-start_time);
     }
 
 

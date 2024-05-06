@@ -5,7 +5,7 @@
 void srandom (unsigned seed);  
 double dboard (int darts);
 
-#define DARTS 500000   	/* number of throws at dartboard */
+#define DARTS 50000   	/* number of throws at dartboard */
 #define ROUNDS 100    	/* number of times "darts" is iterated */
 
 int main(int argc, char *argv[]){

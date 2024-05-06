@@ -86,7 +86,6 @@ with pymp.Parallel(4) as p:
 
 Link to implementation and setup of Pymp : https://github.com/classner/pymp
 
-
 ### [PyOMP - Multithreaded Parallel Python Through OpenMP Support in Numba](https://tigress-web.princeton.edu/~jdh4/PyOMPintro.pdf)
 
 - Python is not designed for parallel programming with threads.
@@ -119,6 +118,21 @@ the full range of OpenMP constructs.
 
 - Link to PyOMP Implementation and Setup : https://github.com/Python-for-HPC/PyOMP
 
+
+## Results of Pymp
+
+### Matrix Multiplication
+
+![Matrix Multiplication](./Images/PympMul.png)
+
+- Here we are performing matrix multiplication of 2 matrices of size 500*500 
+- We can see that Pymp is almost 6 times faster than performing matrix multiplicaton serially
+
+### Primes 
+
+![Primes](./Images/PympPrimes.png)
+- Here we are finding the total number of primes 
+- In this figure, we can see that the pymp program is 3 times faster than the serial program
 
 
 

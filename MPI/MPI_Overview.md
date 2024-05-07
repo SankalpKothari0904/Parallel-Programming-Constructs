@@ -42,7 +42,7 @@ MPI calls have a specific format:
 MPI uses objects called communicators and groups to define which collection of processes may communicate with each other.
 
 - **Specifying Communicators:**  
-Most MPI routines require you to specify a communicator as an argument. Communicators and groups will be covered in more detail later. For now, simply use MPI_COMM_WORLD whenever a communicator is required - it is the predefined communicator that includes all of your MPI processes.
+Most MPI routines require you to specify a communicator as an argument. Communicators and groups will be covered in more detail later. Example - MPI_COMM_WORLD - it is the predefined communicator that includes all of your MPI processes.
 
 #### Rank
 

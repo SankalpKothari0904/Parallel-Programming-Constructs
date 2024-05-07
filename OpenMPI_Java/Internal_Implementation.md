@@ -11,7 +11,7 @@ The Java bindings define various Java classes to represent MPI entities, such as
 
 ![Classes to implement OpenMPI Java bindings](./class_heirarchy.png)
 _Fig. Class hierarchy of the Open MPI Java bindings. Main classes are depicted with rounded corners. Classes shown at the bottom are minor
-classes defined by the MPI specification. Classes on the upper-right corner are used when a method returns structured information. The two classesdepicted with dashed lines are abstract classes intended to be extended by the user._
+classes defined by the MPI specification. Classes on the upper-right corner are used when a method returns structured information. The two classes depicted with dashed lines are abstract classes intended to be extended by the user._
 
 ### JNI Methods
 Java methods that interact with the native MPI code are annotated with the `native` keyword, indicating that their implementation resides in native code. These methods serve as the entry points for invoking MPI operations from Java. When called, these methods delegate the actual MPI functionality to the corresponding native functions via JNI invocation.

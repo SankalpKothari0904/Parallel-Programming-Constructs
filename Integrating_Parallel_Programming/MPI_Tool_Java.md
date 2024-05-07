@@ -17,7 +17,7 @@ This package aims to implement MPI as close to the C/C++ implementation as possi
 - **MPI class** : Only has static members. It acts as a module containing global
 services, such as initialization of MPI, and many global constants including the default communicator COMM WORLD.
 
-- **Comm class** : All the communication functions are a member of or a subclass of this class. As usual in MPI, a communicator stands for a 'collective ob ject' logically shared by a group of processor.
+- **Comm class** : All the communication functions are a member of or a subclass of this class. As usual in MPI, a communicator stands for a 'collective object' logically shared by a group of processor.
     
     - The standard send and receive operations of MPI are members of Comm with interfaces: count is number of elements returned. 
 

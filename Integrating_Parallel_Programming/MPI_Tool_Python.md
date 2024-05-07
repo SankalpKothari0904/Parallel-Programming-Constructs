@@ -17,7 +17,7 @@ It supports point-to-point (sends, receives) and collective (broadcasts, scatter
 
 It provides an object oriented approach to message passing which is based on the standard MPI-2 C++ bindings. 
 
-**The interface was designed with focus in translating MPI syntax and semantics of standard MPI-2 bindings for C++ to Python**
+**The interface was designed with focus in translating MPI syntax and semantics of standard MPI-2 bindings from C++ to Python**
 
 ### Communicating Python Objects and Array Data
 

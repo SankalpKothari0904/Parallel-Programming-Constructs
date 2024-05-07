@@ -103,7 +103,7 @@ public class Hello {
             jomp.runtime.0MP.doParallel(__omp_obj_0); 
         } 
         catch(Throwable __omp_exception) { 
-            System.err.println("0MP Warning: exception in parallel region") ; 
+            System.err.println("OMP Warning: exception in parallel region") ; 
         } 
     } 
     
@@ -111,7 +111,7 @@ public class Hello {
             extends jomp.runtime.BusyTask { 
         public void ge(int __omp_me) throws Throwable { 
             int myid; 
-            myid = 0MP.getThreadNumO; 
+            myid = OMP.getThreadNumO; 
             System.out.println("Hello from " + myid); 
         } 
     } 
@@ -129,7 +129,7 @@ It provides the necessary functionality to support parallelism in terms of Java'
 
 - The initialization step of the runtime environment consists of 2 parts: 
     - **Static initialization** where the OMP class reads the system properties like jomp.threads [number of threads to use during execution], jomp.schedule, etc.
-    - A **start() method** is called when the first paralle method is encountered[directives] and initializes:
+    - A **start() method** is called when the first parallel method is encountered[directives] and initializes:
         - Thread specific data
         - Creating team of threads.
         - These threads are then set to be running and wait to be assigned a task based on the scheduler [static or dynamic].
